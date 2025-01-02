@@ -19,10 +19,10 @@ class DatabaseSettings(BaseSettings):
 
     @field_validator('DEV_MODE')
     @classmethod
-    def validate_debug(cls, value: bool | None, info: ValidationInfo):    
+    def validate_debug(cls, value: bool | None):
         if value is not None:
             return value
-        
+
         load_dotenv(".env.dev")
 
         if (new_value := getenv("DEV_MODE")) is None:

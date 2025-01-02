@@ -14,3 +14,4 @@ class Match(Base):
     game_mode: Mapped[int]
 
     isRadiantWon: Mapped[bool]
+    isProMatch: Mapped[bool]
