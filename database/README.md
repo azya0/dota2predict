@@ -16,7 +16,7 @@ alembic revision --autogenerate
 ## Solution
 
 1. Check your env variables
-2. Make sure that the **DEV_MODE** variable is undefined or set to True.
+2. Make sure that the **DEV_MODE** variable is undefined.
 
 ## Removing
 
