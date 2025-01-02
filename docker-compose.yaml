@@ -34,6 +34,7 @@ services:
     restart: no
     env_file:
       - .env
+      - .env.database
     build:
       dockerfile: ../dockerfiles/migration/Dockerfile
       context: database
