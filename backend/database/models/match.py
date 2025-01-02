@@ -1,7 +1,9 @@
-from sqlalchemy import ForeignKey
+from datetime import datetime
+
+from sqlalchemy import DateTime
 from sqlalchemy.orm import Mapped, mapped_column
 
-from models.base import Base, IntPrimKey, CreateDate
+from models.base import Base, IntPrimKey
 
 
 class Match(Base):
@@ -15,3 +17,5 @@ class Match(Base):
 
     isRadiantWon: Mapped[bool]
     isProMatch: Mapped[bool]
+
+    date: Mapped[datetime] = mapped_column(DateTime(timezone=True))

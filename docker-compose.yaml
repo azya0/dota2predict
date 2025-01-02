@@ -36,8 +36,8 @@ services:
       - .env
       - .env.database
     build:
-      dockerfile: ../dockerfiles/migration/Dockerfile
-      context: database
+      context: backend/database
+      dockerfile: ../../dockerfiles/migration/Dockerfile
     depends_on:
       db:
         condition: service_healthy

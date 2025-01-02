@@ -1,24 +1,21 @@
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
+from sqlalchemy.orm import Session
 from typing_extensions import AsyncGenerator
 
 from config import get_settings
 
 class SessionManager:
     def __init__(self):
-        settings = get_settings()
         self.async_engine = create_async_engine(
-            url=settings.SQLALCHEMY_URL,
+            url=get_settings().SQLALCHEMY_URL,
             echo=False,
             pool_size=5,
             max_overflow=10
         )
         
-        self.async_session = sessionmaker(
-            self.async_engine,
-            expire_on_commit=False,
-            class_=AsyncSession
+        self.async_session = async_sessionmaker(
+            self.async_engine
         )
 
     def __new__(cls):
