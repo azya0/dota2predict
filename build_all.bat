@@ -1,0 +1,1 @@
+docker-compose --env-file .env.database up --build

@@ -41,3 +41,16 @@ services:
     depends_on:
       db:
         condition: service_healthy
+  
+  collect_data:
+    container_name: collect_match_data
+    restart: no
+    env_file:
+      - .env
+      - .env.database
+    build:
+      context: backend
+      dockerfile: ../dockerfiles/collect_match_data/Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
