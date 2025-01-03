@@ -9,7 +9,7 @@ import asyncio
 from alembic import context
 
 from config import get_settings
-from models import *
+from models.__all__ import *
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

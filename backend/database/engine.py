@@ -1,9 +1,10 @@
+from functools import lru_cache
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 from sqlalchemy.orm import Session
 from typing_extensions import AsyncGenerator
 
-from config import get_settings
+from database.config import get_settings
 
 class SessionManager:
     def __init__(self):
@@ -27,8 +28,17 @@ class SessionManager:
         return self.async_session()
 
 
-async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
-    async_session = SessionManager().get_session()
+@lru_cache
+def get_session_manager() -> SessionManager:
+    return SessionManager()
+
+
+async def get_async_session() -> AsyncSession:
+    return get_session_manager().get_session()
+
+
+async def get_async_session_generator() -> AsyncGenerator[AsyncSession, None]:
+    async_session = get_session_manager().get_session()
 
     async with async_session:
         try:
@@ -37,5 +47,3 @@ async def get_async_session() -> AsyncGenerator[AsyncSession, None]:
         except SQLAlchemyError as exc:
             await async_session.rollback()
             raise exc
-        finally:
-            await async_session.close()

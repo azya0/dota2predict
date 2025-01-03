@@ -7,7 +7,7 @@ class ID:
     id: int
 
 
-class PostMatch(BaseModel, ID):
+class MatchForm(BaseModel, ID):
     patch: int
     duration: int
     game_mode: int

@@ -23,7 +23,7 @@ class DatabaseSettings(BaseSettings):
         if value is not None:
             return value
 
-        load_dotenv(".env.dev")
+        load_dotenv(f"{"" if __name__ == "config" else "database/" }.env.dev"  )
 
         if (new_value := getenv("DEV_MODE")) is None:
             raise EnvironmentError("miss at least .env.dev")

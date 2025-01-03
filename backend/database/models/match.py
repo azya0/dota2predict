@@ -2,14 +2,15 @@ from datetime import datetime
 
 from sqlalchemy import DateTime
 from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.types import BigInteger
 
-from models.base import Base, IntPrimKey
+from .base import Base
 
 
 class Match(Base):
     __tablename__ = "match"
 
-    id: Mapped[IntPrimKey]
+    id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     
     patch: Mapped[int]
     duration: Mapped[int]
