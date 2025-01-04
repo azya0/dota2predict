@@ -41,16 +41,30 @@ services:
     depends_on:
       db:
         condition: service_healthy
-  
-  collect_data:
-    container_name: collect_match_data
+
+  collect_heroes:
+    container_name: collect_heroes
     restart: no
     env_file:
       - .env
       - .env.database
     build:
       context: backend
-      dockerfile: ../dockerfiles/collect_match_data/Dockerfile
+      dockerfile: ../dockerfiles/collect/Dockerfile
     depends_on:
       db:
         condition: service_healthy
+    command: python collect_heroes.py
+  
+  collect_pro_matches:
+    container_name: collect_pro_matches
+    restart: no
+    env_file:
+      - .env
+      - .env.database
+    build:
+      context: backend
+      dockerfile: ../dockerfiles/collect/Dockerfile
+    depends_on:
+      - collect_heroes
+    command: python collect.py

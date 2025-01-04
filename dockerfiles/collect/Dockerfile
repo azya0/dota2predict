@@ -7,5 +7,3 @@ RUN pip install -r ./collect_requirements.txt
 COPY ./ ./
 
 RUN pip install -r ./database/requirements.txt
-
-CMD ["python", "collect.py"]

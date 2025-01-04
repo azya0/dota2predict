@@ -16,3 +16,7 @@ class MatchForm(BaseModel, ID):
     isProMatch: bool
 
     date: datetime.datetime
+
+
+class HeroForm(BaseModel, ID):
+    name: str
