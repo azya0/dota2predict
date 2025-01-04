@@ -1,12 +1,16 @@
-import requests
+import aiohttp
 
 OPENDOTA_URL = "https://api.opendota.com/api"
 
-def get(url: str) -> requests.Response:
-    data = requests.get(f"{OPENDOTA_URL}/{url}")
 
-    if data.status_code == 200:
-        return data
-    
-    raise Exception(f"[{data.status_code}] {data.content}")
+async def get(url: str) -> list[dict]:
+    full_url = f"{OPENDOTA_URL}/{url}"
 
+    async with aiohttp.ClientSession() as session:
+        async with session.get(full_url) as response:
+            result = await response.json()
+
+            if (status := response.status) != 200:
+                raise Exception(f"[{status}] {result["error"]}")
+            
+            return result

@@ -1,9 +1,9 @@
-from opendota.queries.base import requests, get
+from opendota.queries.base import get, aiohttp
 
 
-def get_pro_matches():
-    return get("proMatches")
+async def get_pro_matches() -> aiohttp.ClientResponse:
+    return await get("proMatches")
 
 
-def get_match(id: int) -> requests.Response:
-    return get(f"matches/{id}")
+async def get_match(id: int) -> aiohttp.ClientResponse:
+    return await get(f"matches/{id}")

@@ -1,6 +1,5 @@
 from datetime import datetime
 
-from opendota.queries.opendota_requests import get_match
 from database.queries.schemas import MatchForm
 
 
@@ -15,15 +14,13 @@ def parse_pro_matches(data: list[dict]) -> list[tuple[int, datetime]]:
     return result
 
 
-def parse_match(id: int, isProMatch: bool = False) -> MatchForm:
-    data: dict = get_match(id).json()
-
+def parse_match(data: list[dict], is_pro_match=False) -> MatchForm:
     return MatchForm(
         id=data["match_id"],
         patch=data["patch"],
         duration=data["duration"],
         game_mode=data["game_mode"],
         isRadiantWon=data["radiant_win"],
-        isProMatch=isProMatch,
+        isProMatch=is_pro_match,
         date=datetime.fromtimestamp(data["start_time"])
     )
