@@ -19,7 +19,9 @@ async def collect_pro_matches():
 
     matches_id = []
 
-    for counting, (id, _) in enumerate(parse_pro_matches(await get_pro_matches())):
+    pro_matches = await get_pro_matches()
+
+    for counting, (id, _) in enumerate(parse_pro_matches(pro_matches)):
         if (await get_match_from_db(id)) is not None:
             continue
         
