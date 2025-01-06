@@ -1,6 +1,7 @@
 from venv import logger
 import asyncio
 
+from logger import getLogger, logging
 from opendota.parsers.parsers import parse_hero
 from opendota.queries.opendota_requests import get_heroes
 
@@ -8,13 +9,13 @@ from database.queries.db_requests import get, post, update
 from database.models.hero import Hero
 
 
-async def collect_heroes():
-    logger.log(0, "Start collecting heroes")
+async def collect_heroes(logger: logging.Logger):
+    logger.info("Start collecting heroes")
 
     hero_data = await get_heroes()
 
     for hero in map(lambda hero_dict: parse_hero(hero_dict), hero_data):
-        logger.log(0, f"Checking out {hero.name}...")
+        logger.info(f"Checking out {hero.name}...")
 
         if (orm_hero := await get(Hero, hero.id)) is None:
             logger.warning(f"Saving...")
@@ -34,14 +35,16 @@ async def collect_heroes():
 
 
 if __name__ == "__main__":
-    logger.log(0, "Initialization new event loop")
+    logger = getLogger("collect heroes")
+
+    logger.info("Initialization new event loop")
 
     loop = asyncio.new_event_loop()
 
     asyncio.set_event_loop(loop)
 
     try:
-        asyncio.run(collect_heroes())
+        asyncio.run(collect_heroes(logger))
     finally:
         loop.close()
 
